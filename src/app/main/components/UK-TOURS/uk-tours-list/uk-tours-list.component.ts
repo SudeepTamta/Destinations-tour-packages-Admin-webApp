@@ -33,9 +33,10 @@ export class UkToursListComponent {
   }
 
   ngOnInit(): void {
-    this.ukToursData$ = this.ukServices.getAllUkTours();
+    this.showLoader = true;
     setTimeout(() => {
-      if (this.ukToursData$) {
+      if (this.ukToursData$ == null) {
+        this.ukToursData$ = this.ukServices.getAllUkTours();
         this.showLoader = false;
       }
     }, 2000);
