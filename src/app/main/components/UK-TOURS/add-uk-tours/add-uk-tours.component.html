@@ -1,0 +1,156 @@
+<div class="card">
+    <h5>Add UK tour</h5>
+    <form [formGroup]="ukToursForm" (ngSubmit)="onSubmit()" class="align-items-center justify-content-center grid">
+        <div class="p-fluid mt-3 col-12 md:col-6 card">
+            <div class="field grid mb-6 align-items-center justify-content-center">
+                <label htmlFor="name3" class="col-12 mb-2 md:col-4 md:mb-0 font-bold justify-content-end">Tours title:
+                </label>
+                <div class="col-12 md:col-8">
+                    <input pInputText id="name3" type="text" name="toursTitle" formControlName="toursTitle"
+                        [value]="ukToursForm.get('toursTitle').value" />
+                    <div class="mt-2 error-message"
+                        *ngIf="ukToursForm.get('toursTitle').touched || ukToursForm.get('toursTitle').dirty">
+                        <span *ngIf="ukToursForm.get('toursTitle').hasError('required')">Tours title is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="field grid mb-6 align-items-center justify-content-center">
+                <label htmlFor="textarea" class="col-12 mb-2 md:col-4 md:mb-0 font-bold justify-content-end">Tours
+                    description:
+                </label>
+                <div class="col-12 md:col-8">
+                    <textarea inputId="textarea" rows="3" cols="60" name="toursDescription"
+                        formControlName="toursDescription" [value]="ukToursForm.get('toursDescription').value"
+                        pInputTextarea></textarea>
+                    <div class="mt-2 error-message"
+                        *ngIf="ukToursForm.get('toursDescription').touched || ukToursForm.get('toursDescription').dirty">
+                        <span *ngIf="ukToursForm.get('toursDescription').hasError('required')">Tours description is
+                            required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="field grid mb-6 align-items-center justify-content-center">
+                <label htmlFor="timeInDays" class="col-12 mb-2 md:col-4 md:mb-0 font-bold justify-content-end">Days:
+                </label>
+                <div class="col-12 md:col-8">
+                    <input pInputText id="timeInDays" type="text" name="timeInDays" formControlName="timeInDays"
+                        [value]="ukToursForm.get('timeInDays').value" />
+                    <div class="mt-2 error-message"
+                        *ngIf="ukToursForm.get('timeInDays').touched || ukToursForm.get('timeInDays').dirty">
+                        <span *ngIf="ukToursForm.get('timeInDays').hasError('required')">Days are required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="field grid mb-6 align-items-center justify-content-center">
+                <label htmlFor="timeInNight" class="col-12 mb-2 md:col-4 md:mb-0 font-bold justify-content-end">Night:
+                </label>
+                <div class="col-12 md:col-8">
+                    <input pInputText id="timeInNight" type="text" name="timeInNight" formControlName="timeInNight"
+                        [value]="ukToursForm.get('timeInNight').value" />
+                    <div class="mt-2 error-message"
+                        *ngIf="ukToursForm.get('timeInNight').touched || ukToursForm.get('timeInNight').dirty">
+                        <span *ngIf="ukToursForm.get('timeInNight').hasError('required')">Nights are required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="field grid mb-6 align-items-center justify-content-center">
+                <label htmlFor="tourPrice" class="col-12 mb-2 md:col-4 md:mb-0 font-bold justify-content-end">Tour
+                    Price:
+                </label>
+                <div class="col-12 md:col-8">
+                    <input pInputText id="tourPrice" type="number" name="tourPrice" formControlName="tourPrice"
+                        [value]="ukToursForm.get('tourPrice').value" />
+                    <div class="mt-2 error-message"
+                        *ngIf="ukToursForm.get('tourPrice').touched || ukToursForm.get('tourPrice').dirty">
+                        <span *ngIf="ukToursForm.get('tourPrice').hasError('required')">Price is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="field grid mb-6 align-items-center justify-content-center">
+                <label htmlFor="featuredImageUrl"
+                    class="col-12 mb-2 md:col-4 md:mb-0 font-bold justify-content-end">Tour Image: </label>
+                <div class="col-12 md:col-8 field grid justify-content-between align-items-center">
+                    <button type="button" pButton class="md:col-4 mb-2 py-2" (click)="openImageSelector()">Select
+                        Image <i class="pi pi-cloud-upload" style="font-size: 1.5rem; margin-left: 1rem;"></i></button>
+                    <div class="col-12 md:col-12 px-0">
+
+                        <input id="disabled-input" pInputText type="text" name="featuredImageUrl"
+                            formControlName="featuredImageUrl" [value]="ukToursForm.get('featuredImageUrl').value"
+                            readonly />
+
+                        <div class="mt-2 error-message"
+                            *ngIf="ukToursForm.get('featuredImageUrl').touched || ukToursForm.get('featuredImageUrl').dirty">
+                            <span *ngIf="ukToursForm.get('featuredImageUrl').hasError('required')">Featured image URL is
+                                required please click on Select Image</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="field grid mb-6 align-items-center justify-content-center">
+                <label htmlFor="isVisible" class="col-12 mb-2 md:col-4 md:mb-0 font-bold justify-content-end">Is
+                    Visible:</label>
+                <div class="col-12 md:col-8">
+                    <input id="isVisible" formControlName="isVisible" type="checkbox"
+                        [value]="ukToursForm.get('isVisible').value">
+                </div>
+            </div>
+            <div class="field grid mb-6 align-items-center justify-content-end">
+                <div class="col-12 md:col-3">
+                    <button type="submit" pButton [disabled]="!ukToursForm.valid" class="p-button mb-2">Save</button>
+                </div>
+                <div class="col-12 md:col-3">
+                    <button type="submit" pButton class="p-button-outlined mb-2"
+                        [routerLink]="['/main/components/UK-TOURS/uk-tours-list']">Cancel</button>
+                </div>
+            </div>
+
+            <!-- <div class="field col-12 md:col-4">
+
+                <label for="inputtext">Tours title</label>
+                <input type="text" id="inputtext" pInputText name="toursTitle" formControlName="toursTitle"
+                    [value]="ukToursForm.get('toursTitle').value" />
+                <div *ngIf="ukToursForm.get('toursTitle').hasError('required')">Tours title is required</div>
+            </div>
+            <div class="field col-12 md:col-4">
+
+                <label for="textarea">Tours description</label>
+                <textarea inputId="textarea" rows="3" cols="60" name="toursDescription"
+                    formControlName="toursDescription" [value]="ukToursForm.get('toursDescription').value"
+                    pInputTextarea></textarea>
+                <div *ngIf="ukToursForm.get('toursDescription').hasError('required')">Tours description is required
+                </div>
+            </div> -->
+            <!-- <div class="field col-12 md:col-4">
+                <button type="button" pButton class="mb-3" (click)="openImageSelector()">Select Image</button>
+
+
+                <ng-container *ngIf="this.ukToursForm.get('featuredImageUrl').value !== ''">
+                    <div>
+                        <img [src]="ukToursForm.featuredImageUrl" class="my-2" height="100">
+                    </div>
+                </ng-container>
+
+                <input type="text" name="featuredImageUrl" pInputText formControlName="featuredImageUrl"
+                    [value]="ukToursForm.get('featuredImageUrl').value" />
+                <div *ngIf="ukToursForm.get('featuredImageUrl').hasError('required')">Featured image URL is required
+                </div>
+            </div>
+            <div class="field col-12 md:col-4">
+                <div class="field-checkbox">
+                    <label for="sf1">Is Visible:</label>
+                    <input formControlName="isVisible" type="checkbox" [value]="ukToursForm.get('isVisible').value">
+                </div>
+            </div> -->
+
+        </div>
+    </form>
+</div>
+
+<p-dialog header="Add UK Tours" [(visible)]="imageSelectorVisible" [modal]="true" showEffect="fade"
+    [style]="{width: '70vw'}" [breakpoints]="{'960px': '75vw'}">
+    <app-image-selector></app-image-selector>
+    <ng-template pTemplate="footer">
+        <button pButton icon="pi pi-check" (click)="closeImageSelector()" label="Done"
+            class="p-button-outlined"></button>
+    </ng-template>
+</p-dialog>

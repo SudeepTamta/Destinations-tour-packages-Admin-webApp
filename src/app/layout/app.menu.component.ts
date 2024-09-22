@@ -21,6 +21,12 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
+                label: 'Tours',
+                items: [
+                    { label: 'UK Tours', icon: 'pi pi-fw pi-map', routerLink: ['/main/components/UK-TOURS/uk-tours-list'] }
+                ]
+            },
+            {
                 label: 'UI Components',
                 items: [
                     { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
