@@ -29,7 +29,9 @@ import { AddUkToursComponent } from './components/UK-TOURS/add-uk-tours/add-uk-t
 import { ImageSelectorComponent } from './shared/components/image-selector/image-selector.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { PasswordModule } from 'primeng/password';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { LoaderComponent } from './shared/components/loader/loader.component';
+import { TagModule } from 'primeng/tag';
 
 
 @NgModule({
@@ -37,7 +39,8 @@ import { PasswordModule } from 'primeng/password';
     UkToursListComponent,
     AddUkToursComponent,
     ImageSelectorComponent,
-    LoginComponent
+    LoginComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -63,10 +66,12 @@ import { PasswordModule } from 'primeng/password';
     MessagesModule,
     MessageModule,
     ToastModule,
+    ProgressSpinnerModule,
     DialogModule,
     ConfirmDialogModule,
     ConfirmPopupModule,
     PasswordModule,
+    TagModule,
     ReactiveFormsModule
   ],
   providers: [

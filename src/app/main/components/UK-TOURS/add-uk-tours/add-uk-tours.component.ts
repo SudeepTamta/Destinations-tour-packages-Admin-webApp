@@ -13,7 +13,7 @@ import { ImageService } from 'src/app/main/shared/components/image-selector/imag
 export class AddUkToursComponent implements OnInit, OnDestroy {
   ukToursForm: FormGroup;
   imageSelectorVisible: boolean = false;
-  display: boolean = false;
+  showLoader: boolean;
   value: string | undefined;
 
   imageSelectorSubscription?: Subscription;
@@ -33,6 +33,7 @@ export class AddUkToursComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.showLoader = true;
     this.imageSelectorSubscription = this.imageService.onSelectImage()
       .subscribe({
         next: (selectedImage) => {
@@ -58,13 +59,14 @@ export class AddUkToursComponent implements OnInit, OnDestroy {
           this.ukToursService.getUkTourById(this.id).subscribe((tourData) => {
             this.ukToursForm.patchValue(tourData);
           });
+          this.showLoader = false;
         } else {
-
           this.ukToursForm.reset();
         }
-
+        this.showLoader = false;
       }
     });
+
   }
 
   selectStatus(event) {
@@ -76,26 +78,30 @@ export class AddUkToursComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.showLoader = true;
     if (this.ukToursForm.valid) {
-      console.log(this.ukToursForm.value);
+
 
       if (this.id) {
         this.ukToursService.updateUkTour(this.id, this.ukToursForm.value).subscribe({
           next: (responseData) => {
             this.ukToursForm.reset();
-            this.router.navigateByUrl('/main/components/uk-tours');
+            this.showLoader = false;
+            this.router.navigateByUrl('/main/components/UK-TOURS/uk-tours-list');
           }
         });
       } else {
         this.ukToursService.createUkTours(this.ukToursForm.value).subscribe({
           next: (responseData) => {
             this.ukToursForm.reset();
-            this.router.navigateByUrl('/main/components/uk-tours');
+            this.showLoader = false;
+            this.router.navigateByUrl('/main/components/UK-TOURS/uk-tours-list');
           }
         });
       }
 
     } else {
+      this.showLoader = false;
       console.log('Form is invalid');
     }
   }

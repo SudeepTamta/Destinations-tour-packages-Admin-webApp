@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService, Message } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { AddUkToursModel } from 'src/app/main/models/add-uk-tours.model';
@@ -15,14 +15,14 @@ export class UkToursListComponent {
   ukToursData$?: Observable<UkToursModel[]>;
   loading: boolean = false;
   activityValues: number[] = [0, 100];
-  display: boolean = false;
+  showLoader: boolean = false;
   ukToursForm: AddUkToursModel;
-  imageSelectorVisible: boolean = false;
+  imageSelectorVisible: boolean = true;
 
   @ViewChild('filter') filter!: ElementRef;
   statuses!: any[];
 
-
+  msgs: Message[] = [];
 
   constructor(
     private ukServices: UkToursService,
@@ -34,6 +34,11 @@ export class UkToursListComponent {
 
   ngOnInit(): void {
     this.ukToursData$ = this.ukServices.getAllUkTours();
+    setTimeout(() => {
+      if (this.ukToursData$) {
+        this.showLoader = false;
+      }
+    }, 2000);
     this.statuses = [
       { label: 'Active', value: 'active' },
       { label: 'Inactive', value: 'inactive' },
@@ -54,24 +59,38 @@ export class UkToursListComponent {
   }
 
   deleteTourById(customerId) {
+
     // const target = event.target || new EventTarget;
     // console.log(target);
     this.confirmationService.confirm({
       key: 'confirm1',
       message: 'Are you sure to perform this action?',
       accept: () => {
+        this.showLoader = true;
         this.ukServices.deleteUkTourById(customerId).subscribe((resp) => {
           if (resp) {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Record deleted successfully' });
             this.ukToursData$ = this.ukServices.getAllUkTours();
-            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Tour record deleted Successfully' });
+            this.showLoader = false;
           }
         }, (err) => {
           console.log("Error", err);
+          this.showLoader = false;
         })
       },
       reject: () => {
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Request rejected' });
+        this.messageService.add({ severity: 'error', summary: 'Reject', detail: 'Request rejected' });
       }
     });
+  }
+
+  showSuccessViaMessages() {
+    this.msgs = [];
+    this.msgs.push({ severity: 'success', summary: 'Record deleted successfully', detail: '' });
+  }
+
+  showErrorViaMessages() {
+    this.msgs = [];
+    this.msgs.push({ severity: 'error', summary: 'Request rejected', detail: '' });
   }
 }
